@@ -20,7 +20,8 @@
     "js-md5": "^0.7.3",
     "js-sha256": "^0.9.0",
     "nuxt": "^2.0.0",
-    "pm2": "^3.5.1"
+    "pm2": "^3.5.1",
+    "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.0",
