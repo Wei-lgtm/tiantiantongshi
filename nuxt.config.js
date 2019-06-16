@@ -24,6 +24,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '@/plugins/element-ui',
     '~/assets/css/style.css'
   ],
   /*
