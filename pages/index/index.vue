@@ -19,7 +19,7 @@
         </div>
         <div class="kc_list">
           <ul>
-            <li v-for="(item,index) in courseList" :key="item.id">
+            <li v-for="item in courseList" :key="item.id">
               <div class="box">
                 <div class="img">
 									<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
@@ -42,13 +42,13 @@
                 <div class="kc_btn">
                   <ul>
                     <li>
-                      <a href="#">
+                      <a href="#" @click="showKhbz=true">
                         <span class="span1"></span>
                         <p>考核标准</p>
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="#" @click="showJxjh=true">
                         <span class="span2"></span>
                         <p>教学计划</p>
                       </a>
@@ -65,12 +65,12 @@
           <div class="change">
             <div class="change_list notice_change_list">
               <ul>
-                <li class="on">全部通知</li>
-                <li>课程通知</li>
-                <li>系统通知</li>
+                <li :class="noticeIndex==1?'on':''" @click="noticeTabs(1)">全部通知</li>
+                <li :class="noticeIndex==2?'on':''" @click="noticeTabs(2)">课程通知</li>
+                <li :class="noticeIndex==3?'on':''" @click="noticeTabs(3)">系统通知</li>
               </ul>
               <div class="clear"></div>
-              <div class="send_out">
+              <div class="send_out"  @click="showFstz=true">
                 <label></label><span>发送通知</span>
               </div>
             </div>
@@ -152,14 +152,21 @@
         </div>
       </div>
       <div class="clear"></div>
+      <khbz :showKhbz.sync="showKhbz"/>
+      <jxjh :showJxjh.sync="showJxjh"/>
+      <fstz :showFstz.sync="showFstz"/>
     </div>
   </div>
 </template>
 <script>
-
+import Khbz from '@/components/khbz'
+import Jxjh from '@/components/jxjh'
+import Fstz from '@/components/fstz'
 export default {
 	components:{
-		
+    Khbz,
+    Jxjh,
+    Fstz
 	},
 	data(){
 		return {
@@ -169,6 +176,10 @@ export default {
 			newsList:[],//资讯
 			courseList:[],//课程
 			topicList:[],//话题
+      noticeIndex:1,//通知tab状态
+      showKhbz:false,
+      showJxjh:false,
+      showFstz:false
 		}
 	},
 	mounted(){
@@ -188,7 +199,11 @@ export default {
 		})
 	},
 	methods:{
-
+    noticeTabs(index){
+      const that = this
+      that.noticeIndex = index
+      //这个 通知应该只是参数不同   请求的应该是同一个接口
+    }
 	}
 }
 </script>

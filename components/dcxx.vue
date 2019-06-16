@@ -5,7 +5,7 @@
 							<div class="modal_cont">
 									<div class="close" @click="close()"></div>
 									<div class="modal_tit">
-											<h3><img src="img/icon43.png">督促学习</h3>
+											<h3><img src="@/assets/img/icon43.png">督促学习</h3>
 									</div>
 									<div class="mod_dcxx">
 											<div class="tit">
