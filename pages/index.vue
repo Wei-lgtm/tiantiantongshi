@@ -9,7 +9,7 @@ import Header from '@/components/Header'
 import {aesDecrypt} from '@/utils/crypto'
 export default {
   async asyncData(context){
-    // console.log(context)
+    console.log(context)
   },
   components:{
 		Header
