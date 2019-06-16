@@ -1,9 +1,9 @@
 <template>
-  <div class="page_login" style="background:url(@assets/img/bg.jpg) no-repeat center center; background-size:cover;">
+  <div class="page_login">
     <div class="cell">
       <div class="log_box">
         <div class="logo">
-          <img src="img/logo.png" />
+          <img src="@/assets/img/logo.png" />
         </div>
         <div class="log_chg">
           <a href="login-mob.html">手机验证码登录>></a>
@@ -51,7 +51,11 @@
       }
     },
     mounted() {
-      
+      const that = this
+      let params = { "clientRequestKey":"afe47c1353594eb90c63e8d5778eee64f239b166fa48747ff410427f27b87e4c" }
+      this.utils.api.ApplyAccessToken(params).then(res => {
+        console.log(res)
+      })
     },
     methods: {
       login(){
@@ -73,4 +77,8 @@
   }
 </script>
 <style>
+.page_login{
+  background:url('~assets/img/bg.jpg') no-repeat center center; 
+  background-size:cover;
+}
 </style>
