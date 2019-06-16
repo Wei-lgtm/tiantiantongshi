@@ -39,7 +39,6 @@
   </div>
 </template>
 <script>
-
   export default {
     components: {
 
@@ -54,7 +53,15 @@
       const that = this
       let params = { "clientRequestKey":"afe47c1353594eb90c63e8d5778eee64f239b166fa48747ff410427f27b87e4c" }
       this.utils.api.ApplyAccessToken(params).then(res => {
-        console.log(res)
+        if(res.code == 20200){
+          that.$store.commit('setTokeno',res.data.accessToken)
+          that.$message.success("登陆成功")
+          setTimeout(function(){
+            that.$route.push("/")
+          },1000)
+        }else{
+          that.$message.error(res.msg)
+        }
       })
     },
     methods: {
