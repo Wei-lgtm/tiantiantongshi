@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="btn">
-          <a class="btn_login" href="#" @click="login()">立即登录</a>
+          <a class="btn_login" href="#">立即登录</a>
         </div>
         <div class="rem_pwd">
           <label><input type="checkbox" />记住密码</label><a href="#">忘记密码</a>
@@ -50,8 +50,7 @@
         password: "" //类目
       }
     },
-    methods() {
-      function login() { 
+    mounted() {
       const that = this
       let parnms = { mobile: that.mobile, password: that.password }
       this.utils.api.usernameLogin(parnms).then(res => {
@@ -67,7 +66,6 @@
           this.$message.error(res.msg)
         }
       })
-      }
     },
     methods: {
 
