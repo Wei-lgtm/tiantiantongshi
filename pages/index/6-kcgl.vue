@@ -26,7 +26,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img2.jpg" />
+                    <img src="@/assets/img/img2.jpg" />
                   </a>
                 </div>
                 <div class="web">
@@ -66,7 +66,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img3.jpg" />
+                    <img src="@/assets/img/img3.jpg" />
                   </a>
                 </div>
                 <div class="web">
@@ -106,7 +106,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img4.jpg" />
+                    <img src="@/assets/img/img4.jpg" />
                   </a>
                 </div>
                 <div class="web">
@@ -146,7 +146,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img2.jpg" />
+                    <img src="@/assets/img/img2.jpg" />
                   </a>
                 </div>
                 <div class="web">
@@ -186,7 +186,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img3.jpg" />
+                    <img src="@/assets/img/img3.jpg" />
                   </a>
                 </div>
                 <div class="web">
@@ -226,7 +226,7 @@
               <div class="box">
                 <div class="img">
                   <a href="#">
-                    <img src="img/img4.jpg" />
+                    <img src="@/assets/img/img4.jpg" />
                   </a>
                 </div>
                 <div class="web">

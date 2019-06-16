@@ -16,7 +16,7 @@
         <div class="r_main">
           <h3>第二讲 体制改革：日本明治维新的金融故事<a href="#">返回</a></h3>
           <div class="vedio">
-            <img src="img/vedio.jpg" />
+            <img src="@/assets/img/vedio.jpg" />
             <div class="play"></div>
           </div>
           <div class="web">
