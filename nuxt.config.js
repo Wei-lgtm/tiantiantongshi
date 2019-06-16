@@ -1,7 +1,6 @@
 const webpack = require('webpack')
-
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -25,14 +24,14 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '~/assets/css/style.css'
+	'~/assets/css/style.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/vue-utils'
+	{ src:'@/plugins/vue-utils', ssr:false}
   ],
   /*
   ** Nuxt.js modules

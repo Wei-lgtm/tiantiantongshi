@@ -1,6 +1,6 @@
-# tiantiantongshi
+# test-d
 
-> My transcendent Nuxt.js project
+> My spectacular Nuxt.js project
 
 ## Build Setup
 

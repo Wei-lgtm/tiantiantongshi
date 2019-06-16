@@ -19,11 +19,11 @@
         </div>
         <div class="mechanism">
           <div class="img">
-            <img src="@/assets/img/img7.png" />
+            <img src="img/img7.png" />
           </div>
           <div class="web">
             <div class="list">
-              <p>学校logo：<img src="@/assets/img/img8.png" /><span>请使用60*60的jpg/png格式的图片</span></p>
+              <p>学校logo：<img src="img/img8.png" /><span>请使用60*60的jpg/png格式的图片</span></p>
             </div>
             <div class="list">
               <p>学校名称：<input type="text" placeholder="天天通识" /></p>
