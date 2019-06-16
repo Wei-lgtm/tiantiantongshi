@@ -1,11 +1,8 @@
 import request from '~/utils/request'
 
 const api = {
-  login(params) {
-    return request.post('/blog/login', params)
-  },
-  register(params) {
-    return request.post('/blog/register', params)
+  RecommendIndex(params) {
+    return request.post('/index/recommendIndex')
   }
 }
 
