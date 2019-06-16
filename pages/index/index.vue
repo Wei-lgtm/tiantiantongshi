@@ -19,7 +19,7 @@
         </div>
         <div class="kc_list">
           <ul>
-            <li v-for="item in courseList" :key="item.id">
+            <li v-for="(item,index) in courseList" :key="item.id" v-if="index<showIndex">
               <div class="box">
                 <div class="img">
 									<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
@@ -60,7 +60,7 @@
             </li>
           </ul>
         </div>
-        <div class="kc_list_chg"><label><span>展开全部</span></label></div>
+        <div class="kc_list_chg"><label><span @click="showMycourse">展开全部</span></label></div>
         <div class="notice">
           <div class="change">
             <div class="change_list notice_change_list">
@@ -179,7 +179,8 @@ export default {
       noticeIndex:1,//通知tab状态
       showKhbz:false,
       showJxjh:false,
-      showFstz:false
+      showFstz:false,
+      showIndex:4,
 		}
 	},
 	mounted(){
@@ -203,6 +204,9 @@ export default {
       const that = this
       that.noticeIndex = index
       //这个 通知应该只是参数不同   请求的应该是同一个接口
+    },
+    showMycourse(){
+      this.showIndex = this.courseList.length
     }
 	}
 }

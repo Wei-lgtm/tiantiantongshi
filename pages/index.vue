@@ -9,7 +9,7 @@ import Header from '@/components/Header'
 import {aesDecrypt} from '@/utils/crypto'
 export default {
   async asyncData(context){
-    console.log(context)
+    
   },
   components:{
 		Header
@@ -19,12 +19,7 @@ export default {
 			this.$router.push("/login")
 		}else{
 			let userInfo = JSON.parse(aesDecrypt(sessionStorage.getItem('SUCCESS'),'abc'))
-			if(userInfo.token != sessionStorage.getItem('token')){
-				//token值不相等  有问题
-				//this.$router.push("/login")
-			}else{
-				this.$store.commit("setUserInfo",userInfo)
-			}
+			this.$store.commit("setUserInfo",userInfo)
 		}
 	}
 }

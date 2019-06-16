@@ -78,7 +78,7 @@ h3{white-space:nowrap;overflow:hidden; text-overflow:ellipsis;font-weight:bold;}
 .page_left ul li.on a, .page_left ul li a:hover { padding-left:25px; background:url('../img/bg1.png') no-repeat center center; }
 .page_left ul li.on a span, .page_left ul li a:hover span { padding-left: 0; background: none; background-position:left center; font-size: 24px; color: #fff; }
 .page_right { overflow: hidden; background: #f4f7fa;  padding:30px 33px; position:relative; min-height:750px; }
-.kc_list { margin:0 -33px; height:604px; overflow:hidden; }
+.kc_list { margin:0 -33px;  overflow:hidden; }/**height:604px;**/
 .kc_list ul li { padding: 0 33px; }
 .kc_list ul li .box { border-bottom: 1px solid #e3eaf0; padding: 25px 0; position: relative; }
 .kc_list ul li .img { float: left; width: 178px; height: 100px; overflow: hidden; margin-right: 20px; box-shadow: 0 4px 5px rgba(108,147,185,0.5); border-radius:3px; overflow:hidden; }

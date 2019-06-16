@@ -1,15 +1,17 @@
 <template>
   <div class="header">
 		<div class="logo">
-			<a href="#"><img src="@/assets/img/logo1.png" /></a>
+			<a href="#">
+				<img src="@/assets/img/logo1.png" />
+			</a>
 		</div>
 		<div class="frt">
 			<div class="h_user">
 				<div class="img">
-						<img src="@/assets/img/img1.png" />
+						<img :src="this.$store.getters.userInfo.face ? this.$store.getters.userInfo.face : '@/assets/img/img1.png'" />
 				</div>
 				<div class="web">
-						<p>hi,李老师</p>
+						<p>hi,{{this.$store.getters.userInfo.nickname || ''}}</p>
 				</div>
 				<div class="clear"></div>
 			</div>
