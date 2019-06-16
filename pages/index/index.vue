@@ -19,190 +19,19 @@
         </div>
         <div class="kc_list">
           <ul>
-            <li>
+            <li v-for="(item,index) in courseList" :key="item.id">
               <div class="box">
                 <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img2.jpg" />
-                  </a>
+									<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
+										<img :src="item.coverImg" />
+									</nuxt-link>
                 </div>
                 <div class="web">
-                  <h3><a href="1-ktxq.html">陈志武教授金融通识课</a></h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:50%;"></span></div>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="box">
-                <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img3.jpg" />
-                  </a>
-                </div>
-                <div class="web">
-                  <h3><a href="1-ktxq.html">Excel高级经济管理数据处理</a></h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:10%;"></span></div>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="box">
-                <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img4.jpg" />
-                  </a>
-                </div>
-                <div class="web">
-                  <h3><a href="1-ktxq.html">陈志武教授金融通识课</a></h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:50%;"></span></div>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="box">
-                <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img2.jpg" />
-                  </a>
-                </div>
-                <div class="web">
-                  <h3><a href="1-ktxq.html">世界经济与大国战略</a></h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:50%;"></span></div>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="box">
-                <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img4.jpg" />
-                  </a>
-                </div>
-                <div class="web">
-                  <h3><a href="1-ktxq.html">陈志武教授金融通识课</a></h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:50%;"></span></div>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="box">
-                <div class="img">
-                  <a href="1-ktxq.html">
-                    <img src="@/assets/img/img2.jpg" />
-                  </a>
-                </div>
-                <div class="web">
-                  <h3><a href="1-ktxq.html">世界经济与大国战略</a></h3>
+                  <h3>
+										<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
+											{{item.courseName}}
+										</nuxt-link>
+									</h3>
                   <h4>2019/03/21--2019/09/08</h4>
                   <div class="kc_jxjd">
                     <p>教学进度：<font>50%</font></p>
@@ -331,6 +160,35 @@
 export default {
 	components:{
 		
+	},
+	data(){
+		return {
+			adList:[],//广告
+			categoryList:[],//类目
+			teacherList:[],//教师
+			newsList:[],//资讯
+			courseList:[],//课程
+			topicList:[],//话题
+		}
+	},
+	mounted(){
+		const that = this
+		this.utils.api.RecommendIndex().then(res => {
+			console.log(res)
+			if(res.code == 20200){
+				that.adList = res.data.ad//广告
+				that.categoryList = res.data.category//类目
+				that.teacherList = res.data.teacher//教师
+				that.newsList = res.data.news//资讯
+				that.courseList = res.data.course//课程
+				that.topicList = res.data.topic//话题
+			}else{
+				this.$message.error(res.msg)
+			}
+		})
+	},
+	methods:{
+
 	}
 }
 </script>

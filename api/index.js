@@ -1,7 +1,7 @@
 import request from '~/utils/request'
 
 const api = {
-  RecommendIndex(params) {
+  RecommendIndex() {
     return request.post('/index/recommendIndex')
   }
 }
