@@ -49,7 +49,7 @@
               <div class="clear"></div>
             </div>
             <div class="chart_bar">
-              <img src="img/tb3.jpg" />
+              <img src="@/assets/img/tb3.jpg" />
             </div>
           </div>
           <div class="clear"></div>

@@ -1,2 +1,5 @@
 *{ padding:0; margin:0; }
 a{ text-decoration:none; }
+input,textarea{ outline:none; }
+.none{ display:none; }
+*,*:before,*:after{ box-sizing: initial; }

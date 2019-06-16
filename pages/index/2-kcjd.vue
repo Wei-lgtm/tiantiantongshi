@@ -25,7 +25,7 @@
               <div class="clear"></div>
             </div>
             <div class="chart_pie">
-              <img src="img/tb1.jpg" />
+              <img src="@/assets/img/tb1.jpg" />
             </div>
           </div>
           <div class="right">
@@ -35,7 +35,7 @@
               <div class="clear"></div>
             </div>
             <div class="chart_line">
-              <img src="img/tb2.jpg" />
+              <img src="@/assets/img/tb2.jpg" />
             </div>
           </div>
           <div class="clear"></div>
@@ -47,7 +47,7 @@
               <input type="text" placeholder="请输入班级" /><a href="#"></a>
             </div>
             <div class="title_btn">
-              <span><a class="a1" href="#">督促学习</a></span><span><a class="a2" href="#">导出名单</a></span>
+              <span><a class="a1" href="#" @click="showDcxx=true">督促学习</a></span><span><a class="a2" href="#">导出名单</a></span>
             </div>
             <div class="clear"></div>
           </div>
@@ -168,15 +168,21 @@
         </div>
       </div>
       <div class="clear"></div>
+      <dcxx :showDcxx.sync="showDcxx"/>
     </div>
   </div>
 </template>
 <script>
-
+import Dcxx from '@/components/dcxx'
 export default {
 	components:{
-		
-	}
+		Dcxx
+  },
+  data(){
+    return {
+      showDcxx:false
+    }
+  }
 }
 </script>
 <style>
