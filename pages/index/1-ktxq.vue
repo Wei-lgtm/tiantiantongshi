@@ -1,5 +1,4 @@
 <template>
-
   <div class="mainer">
     <div class="course_det">
       <div class="box">

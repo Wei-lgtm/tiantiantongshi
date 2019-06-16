@@ -3,7 +3,7 @@
     <div class="wrap">
       <div class="page_left">
         <ul>
-          <li class="on"><nuxt-link to="/index"><span>我的课程</span></nuxt-link></li>
+          <li class="on"><nuxt-link to="/"><span>我的课程</span></nuxt-link></li>
           <li><nuxt-link to="/2-kcjd"><span>课程进度</span></nuxt-link></li>
           <li><nuxt-link to="/3-zyks"><span>作业考试</span></nuxt-link></li>
           <li><nuxt-link to="/4-cjgl"><span>成绩管理</span></nuxt-link></li>
