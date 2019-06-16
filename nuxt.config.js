@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'spa',
@@ -23,22 +24,37 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '~/assets/css/animate.min.css',
-    '~/assets/css/owl.carousel.min.css',
-    '~/assets/css/global.css',
     '~/assets/css/style.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '@/plugins/element-ui',
     '@/plugins/vue-utils'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    proxy:true
+  },
+  proxy:{
+    "/api": {
+      target: "http://qasapi.lumibayedu.com/",//http://94.191.80.207:8181/
+      secure: true,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api": "/"
+      }
+    }
+  },
   /*
   ** Build configuration
   */
@@ -46,7 +62,16 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    transpile: [/^element-ui/],
+    extractCSS: {allChunks: true},
     extend(config, ctx) {
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        '$': 'jquery',
+        'jquery': 'jquery',
+        'window.jquery': 'jquery'
+      })
+    ]
   }
 }

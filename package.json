@@ -14,10 +14,16 @@
     "@nuxtjs/axios": "^5.5.4",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "nuxt": "^2.0.0"
+    "element-ui": "^2.9.1",
+    "jquery": "^3.4.1",
+    "nuxt": "^2.0.0",
+    "pm2": "^3.5.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "autoprefixer": "^9.6.0",
+    "nodemon": "^1.18.9",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0"
   },
   "config": {
     "nuxt": {
