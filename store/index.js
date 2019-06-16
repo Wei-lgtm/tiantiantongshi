@@ -5,17 +5,17 @@ import { aesEncrypt, aesDecrypt } from '@/utils/crypto'
 
 Vue.use(Vuex)
 
-const key = 'abc'
+const user = JSON.parse( aesDecrypt(sessionStorage.getItem("SUCCESS") , 'abc') ) || {}
 
 const store = () => new Vuex.Store({
   state:{
-		userInfo: {},
-		token: ''
+		userInfo: user || {},
+		token: user.token || ''
   },
   mutations:{
-		setUserInfo(state,userInfo){
-			sessionStrorage.setItem('SUCCESS',aesEncrypt( JSON.stringify(userInfo) , key ))
-			state.userInfo = userInfo
+		setUserInfo(state,user){
+      state.userInfo = user
+      sessionStorage.setItem('SUCCESS',aesEncrypt( JSON.stringify(user)))
 		},
 		setTokeno(state,token){
       sessionStorage.setItem("token", token);

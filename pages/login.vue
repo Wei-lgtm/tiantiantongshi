@@ -55,10 +55,6 @@
       this.utils.api.ApplyAccessToken(params).then(res => {
         if(res.code == 20200){
           that.$store.commit('setTokeno',res.data.accessToken)
-          that.$message.success("登陆成功")
-          setTimeout(function(){
-            that.$route.push("/")
-          },1000)
         }else{
           that.$message.error(res.msg)
         }
@@ -72,9 +68,12 @@
           password: that.password 
         }
         this.utils.api.usernameLogin(params).then(res => {
-          console.log(res)
           if (res.code == 20200) {
-            
+            that.$store.commit('setUserInfo',res.data)
+            that.$message.success("登陆成功")
+            setTimeout(function(){
+              that.$router.push("/")
+            },1000)
           } else {
             that.$message.error(res.msg)
           }

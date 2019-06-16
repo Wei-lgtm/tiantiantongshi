@@ -25,7 +25,7 @@ server.interceptors.request.use(
         if (config.method == 'get') {
             config.data = true
         }
-        const userInfo = {id:0}
+        let userInfo = {id:0}
         if(sessionStorage.getItem("SUCCESS")){
             userInfo = JSON.parse( aesDecrypt(sessionStorage.getItem("SUCCESS") , 'abc') )
         }
