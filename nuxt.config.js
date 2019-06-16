@@ -47,7 +47,7 @@ module.exports = {
   },
   proxy:{
     "/api": {
-      target: "http://qasapi.lumibayedu.com/",//http://94.191.80.207:8181/
+      target: "http://qasapi.lumibayedu.com/",
       secure: true,
       changeOrigin: true,
       pathRewrite: {
