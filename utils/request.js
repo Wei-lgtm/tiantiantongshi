@@ -25,12 +25,12 @@ server.interceptors.request.use(
         if (config.method == 'get') {
             config.data = true
         }
-        let userInfo = {id:0}
+        let userInfo = {uid:0}
         if(sessionStorage.getItem("SUCCESS")){
             userInfo = JSON.parse( aesDecrypt(sessionStorage.getItem("SUCCESS") , 'abc') )
         }
         config.headers.common['accessToken'] = sessionStorage.getItem("token") || '';
-        config.headers.common['uid'] =  userInfo.id
+        config.headers.common['uid'] =  userInfo.uid
         return config
     },
     error => {

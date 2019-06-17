@@ -53,116 +53,120 @@
           </div>
           <div class="tab_box">
             <table cellpadding="0" cellspacing="0">
-              <tr>
-                <th>班级名称</th>
-                <th>学校</th>
-                <th>辅导老师</th>
-                <th>选修人数</th>
-                <th>班级平均<br />进度(%）</th>
-                <th>快于计划</th>
-                <th>慢于计划</th>
-                <th>没有学习</th>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机1班</a></td>
-                <td>中南大学</td>
-                <td>筱筱</td>
-                <td>1000</td>
-                <td>80.0%</td>
-                <td>450</td>
-                <td>590</td>
-                <td>21</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机2班</a></td>
-                <td>中南大学</td>
-                <td>陈志武</td>
-                <td>1000</td>
-                <td>89.0%</td>
-                <td>1000</td>
-                <td>780</td>
-                <td>98</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机3班</a></td>
-                <td>中南林业科技大学</td>
-                <td>筱筱</td>
-                <td>980</td>
-                <td>92.0%</td>
-                <td>980</td>
-                <td>80</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
-                <td>中南林业科技大学</td>
-                <td>李小明</td>
-                <td>980</td>
-                <td>98.0%</td>
-                <td>600</td>
-                <td>80</td>
-                <td>321</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
-                <td>中南林业科技大学</td>
-                <td>小一</td>
-                <td>123</td>
-                <td>90.0%</td>
-                <td>600</td>
-                <td>980</td>
-                <td>23</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
-                <td>中南林业科技大学</td>
-                <td>李小明</td>
-                <td>980</td>
-                <td>98.0%</td>
-                <td>600</td>
-                <td>80</td>
-                <td>321</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
-                <td>中南林业科技大学</td>
-                <td>小一</td>
-                <td>123</td>
-                <td>90.0%</td>
-                <td>600</td>
-                <td>980</td>
-                <td>23</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
-                <td>中南林业科技大学</td>
-                <td>李小明</td>
-                <td>980</td>
-                <td>98.0%</td>
-                <td>600</td>
-                <td>80</td>
-                <td>321</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
-                <td>中南林业科技大学</td>
-                <td>小一</td>
-                <td>123</td>
-                <td>90.0%</td>
-                <td>600</td>
-                <td>980</td>
-                <td>23</td>
-              </tr>
-              <tr>
-                <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
-                <td>中南林业科技大学</td>
-                <td>李小明</td>
-                <td>980</td>
-                <td>98.0%</td>
-                <td>600</td>
-                <td>80</td>
-                <td>321</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>班级名称</th>
+                  <th>学校</th>
+                  <th>辅导老师</th>
+                  <th>选修人数</th>
+                  <th>班级平均<br />进度(%）</th>
+                  <th>快于计划</th>
+                  <th>慢于计划</th>
+                  <th>没有学习</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机1班</a></td>
+                  <td>中南大学</td>
+                  <td>筱筱</td>
+                  <td>1000</td>
+                  <td>80.0%</td>
+                  <td>450</td>
+                  <td>590</td>
+                  <td>21</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机2班</a></td>
+                  <td>中南大学</td>
+                  <td>陈志武</td>
+                  <td>1000</td>
+                  <td>89.0%</td>
+                  <td>1000</td>
+                  <td>780</td>
+                  <td>98</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机3班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>筱筱</td>
+                  <td>980</td>
+                  <td>92.0%</td>
+                  <td>980</td>
+                  <td>80</td>
+                  <td>111</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>李小明</td>
+                  <td>980</td>
+                  <td>98.0%</td>
+                  <td>600</td>
+                  <td>80</td>
+                  <td>321</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>小一</td>
+                  <td>123</td>
+                  <td>90.0%</td>
+                  <td>600</td>
+                  <td>980</td>
+                  <td>23</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>李小明</td>
+                  <td>980</td>
+                  <td>98.0%</td>
+                  <td>600</td>
+                  <td>80</td>
+                  <td>321</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>小一</td>
+                  <td>123</td>
+                  <td>90.0%</td>
+                  <td>600</td>
+                  <td>980</td>
+                  <td>23</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>李小明</td>
+                  <td>980</td>
+                  <td>98.0%</td>
+                  <td>600</td>
+                  <td>80</td>
+                  <td>321</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算55班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>小一</td>
+                  <td>123</td>
+                  <td>90.0%</td>
+                  <td>600</td>
+                  <td>980</td>
+                  <td>23</td>
+                </tr>
+                <tr>
+                  <td><a href="2-kcjd-bjxq.html">19级计算机4班</a></td>
+                  <td>中南林业科技大学</td>
+                  <td>李小明</td>
+                  <td>980</td>
+                  <td>98.0%</td>
+                  <td>600</td>
+                  <td>80</td>
+                  <td>321</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

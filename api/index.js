@@ -12,6 +12,10 @@ const api = {
   //用户登陆
   usernameLogin(params) {
     return request.post('/user/usernameLogin', params)
+  }, 
+  //系统消息
+  systemMessage(params) {
+    return request.post('/message/mineList',params)
   }
 }
 

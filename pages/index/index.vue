@@ -19,44 +19,46 @@
         </div>
         <div class="kc_list">
           <ul>
-            <li v-for="(item,index) in courseList" :key="item.id" v-if="index<showIndex">
-              <div class="box">
-                <div class="img">
-									<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
-										<img :src="item.coverImg" />
-									</nuxt-link>
-                </div>
-                <div class="web">
-                  <h3>
-										<nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
-											{{item.courseName}}
-										</nuxt-link>
-									</h3>
-                  <h4>2019/03/21--2019/09/08</h4>
-                  <div class="kc_jxjd">
-                    <p>教学进度：<font>50%</font></p>
-                    <div class="progress_bar"><span style="width:50%;"></span></div>
+            <li v-for="(item,index) in courseList" :key="item.id">
+              <template  v-if="index<showIndex">
+                <div class="box">
+                  <div class="img">
+                    <nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
+                      <img :src="item.coverImg" />
+                    </nuxt-link>
+                  </div>
+                  <div class="web">
+                    <h3>
+                      <nuxt-link :to="{path:'/1-ktxq',query:{id:item.id}}">
+                        {{item.courseName}}
+                      </nuxt-link>
+                    </h3>
+                    <h4>2019/03/21--2019/09/08</h4>
+                    <div class="kc_jxjd">
+                      <p>教学进度：<font>50%</font></p>
+                      <div class="progress_bar"><span style="width:50%;"></span></div>
+                    </div>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="kc_btn">
+                    <ul>
+                      <li>
+                        <a href="#" @click="showKhbz=true">
+                          <span class="span1"></span>
+                          <p>考核标准</p>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" @click="showJxjh=true">
+                          <span class="span2"></span>
+                          <p>教学计划</p>
+                        </a>
+                      </li>
+                    </ul>
+                    <div class="clear"></div>
                   </div>
                 </div>
-                <div class="clear"></div>
-                <div class="kc_btn">
-                  <ul>
-                    <li>
-                      <a href="#" @click="showKhbz=true">
-                        <span class="span1"></span>
-                        <p>考核标准</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" @click="showJxjh=true">
-                        <span class="span2"></span>
-                        <p>教学计划</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="clear"></div>
-                </div>
-              </div>
+              </template>
             </li>
           </ul>
         </div>
@@ -78,12 +80,12 @@
               <div class="change_item">
                 <div class="course_notice">
                   <ul>
-                    <li>
-                      <h3>深圳大学孙忠梅教授及其团队有关慕课（MOOCs）建设专题报告资料</h3>
-                      <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
-                      <h4>2019/03/21  18:00<span>来源：小小</span></h4>
+                    <li v-for="(item,index) in noticelist" :key="index">
+                      <h3>{{item.title}}</h3>
+                      <p>{{item.content}}</p>
+                      <h4>{{item.addTimeFormat}}<span>来源：小小</span></h4>
                     </li>
-                    <li>
+                    <!-- <li>
                       <h3>青岛大学通识教育规范</h3>
                       <div class="img_box">
                         <ul>
@@ -95,55 +97,7 @@
                       </div>
                       <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
                       <h4>2019/03/21  18:00<span>来源：小小</span></h4>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="change_item none">
-                <div class="course_notice">
-                  <ul>
-                    <li>
-                      <h3>深圳大学孙忠梅教授及其团队有关慕课（MOOCs）建设专题报告资料</h3>
-                      <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
-                      <h4>2019/03/21  18:00<span>来源：小小</span></h4>
-                    </li>
-                    <li>
-                      <h3>青岛大学通识教育规范</h3>
-                      <div class="img_box">
-                        <ul>
-                          <li><img src="@/assets/img/img2.jpg" /></li>
-                          <li><img src="@/assets/img/img5.jpg" /></li>
-                          <li><img src="@/assets/img/img6.jpg" /></li>
-                        </ul>
-                        <div class="clear"></div>
-                      </div>
-                      <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
-                      <h4>2019/03/21  18:00<span>来源：小小</span></h4>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="change_item none">
-                <div class="course_notice">
-                  <ul>
-                    <li>
-                      <h3>深圳大学孙忠梅教授及其团队有关慕课（MOOCs）建设专题报告资料</h3>
-                      <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
-                      <h4>2019/03/21  18:00<span>来源：小小</span></h4>
-                    </li>
-                    <li>
-                      <h3>青岛大学通识教育规范</h3>
-                      <div class="img_box">
-                        <ul>
-                          <li><img src="@/assets/img/img2.jpg" /></li>
-                          <li><img src="@/assets/img/img5.jpg" /></li>
-                          <li><img src="@/assets/img/img6.jpg" /></li>
-                        </ul>
-                        <div class="clear"></div>
-                      </div>
-                      <p>请各学院根据《青岛大学通识教育选修课程归属建议一览表》（见附件1），结合本学院实际情况，对同意课程归属建议的进行确认；对不同意课程归属建议的，需说明理由。表格需由学院负责人签字，并加盖公章，于6月3日15:00前报送通识教育与课程建设办公室（办公楼106室），同时发送电子稿至qdukcb@163.com。</p>
-                      <h4>2019/03/21  18:00<span>来源：小小</span></h4>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>
@@ -181,12 +135,16 @@ export default {
       showJxjh:false,
       showFstz:false,
       showIndex:4,
+      page:1,  //页码
+      pagesize:1000, //分页大小
+      type:1, //消息类型
+
+      noticelist:[],//消息列表
 		}
 	},
 	mounted(){
 		const that = this
 		this.utils.api.RecommendIndex().then(res => {
-			console.log(res)
 			if(res.code == 20200){
 				that.adList = res.data.ad//广告
 				that.categoryList = res.data.category//类目
@@ -195,15 +153,44 @@ export default {
 				that.courseList = res.data.course//课程
 				that.topicList = res.data.topic//话题
 			}else{
-				this.$message.error(res.msg)
+				that.$message.error(res.msg)
 			}
-		})
+    })
+    
+    let params={
+      page:that.page,
+      pagesize:that.pagesize,
+      type:that.type
+    }
+    
+    this.utils.api.systemMessage(params).then(res => {
+      if(res.code==20200){
+        that.noticelist=res.data.list
+      }else{
+        that.$message.error(res.msg)
+      }
+    })
 	},
 	methods:{
     noticeTabs(index){
       const that = this
       that.noticeIndex = index
       //这个 通知应该只是参数不同   请求的应该是同一个接口
+      that.type = index
+      let params={
+        page:that.page,
+        pagesize:that.pagesize,
+        type:that.type
+      }
+    
+      this.utils.api.systemMessage(params).then(res => {
+        console.log(res)
+        if(res.code==20200){
+          that.noticelist=res.data.list
+        }else{
+          that.$message.error(res.msg)
+        }
+      })
     },
     showMycourse(){
       this.showIndex = this.courseList.length

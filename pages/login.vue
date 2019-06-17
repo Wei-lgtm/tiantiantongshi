@@ -68,8 +68,9 @@
           password: that.password 
         }
         this.utils.api.usernameLogin(params).then(res => {
-          if (res.code == 20200) {
+          if (res.code == 20200 && res.userType==4) {
             that.$store.commit('setUserInfo',res.data)
+            that.$store.commit('setTokeno',res.data.token)
             that.$message.success("登陆成功")
             setTimeout(function(){
               that.$router.push("/")
