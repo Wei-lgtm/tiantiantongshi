@@ -15,7 +15,16 @@
       </div>
       <div class="page_right">
         <div class="course_sel">
-          <span>陈志武教授金融通识课_2019年秋季</span>
+          <span @click="showToggle()">{{cname.courseName}}</span>
+          <div class="drop" v-show="dropshow">
+            <ul>
+              <li
+                v-for="(item,index) in courseList"
+                :key="index"
+                @click="fungetRate(item.courseId,item.termId,item.courseName)"
+              >{{item.courseName}}</li>
+            </ul>
+          </div>
         </div>
         <div class="chart">
           <div class="left">
@@ -30,14 +39,14 @@
               </div>
               <div class="list">
                 <ul>
-                  <li><p>参与人数：500</p></li>
-                  <li><p>及格人数：300</p></li>
-                  <li><p>未及格人数：100</p></li>
+                  <li><p>参与人数：{{summaryList.studentTotal}}</p></li>
+                  <li><p>及格人数：{{summaryList.passStudentTotal}}</p></li>
+                  <li><p>未及格人数：{{summaryList.flunkStudentTotal}}</p></li>
                 </ul>
                 <ul>
-                  <li><p>平均成绩：300</p></li>
-                  <li><p>最高成绩：100</p></li>
-                  <li><p>最低成绩：0</p></li>
+                  <li><p>平均成绩：{{summaryList.avgScore}}</p></li>
+                  <li><p>最高成绩：{{summaryList.maxScore}}</p></li>
+                  <li><p>最低成绩：{{summaryList.minScore}}</p></li>
                 </ul>
                 <div class="clear"></div>
               </div>
@@ -67,6 +76,7 @@
           </div>
           <div class="tab_box tab_box1">
             <table cellpadding="0" cellspacing="0">
+              <thead>
               <tr>
                 <th>学号</th>
                 <th>学生姓名</th>
@@ -77,96 +87,19 @@
                 <th>补考分数</th>
                 <th>总成绩</th>
               </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
+              </thead>
+              <tbody>
+              <tr v-for="(item,index) in achievementList" :key="index">
+                <td>{{item.studentNo}}</td>
+                <td>{{item.studentName}}</td>
+                <td>{{item.className}}</td>
+                <td>{{item.progressPercent}}</td>
+                <td>{{item.exercisesScore}}</td>
+                <td>{{item.examScore}}</td>
+                <td>{{item.makeUpExamScore}}</td>
+                <td><a href="#">{{item.score}}</a></td>
               </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
-              <tr>
-                <td>10009</td>
-                <td>陈志武</td>
-                <td>19级计算机1班</td>
-                <td>10.0%</td>
-                <td>98</td>
-                <td>98</td>
-                <td>78</td>
-                <td><a href="#">98</a></td>
-              </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -176,11 +109,99 @@
   </div>
 </template>
 <script>
-
 export default {
-	components:{
-		
-	}
+	components: {},
+  data() {
+    return {
+      courseList: [], //課程列表
+      achievementList: [], //成绩列表
+      cname: [],
+      dropshow: false,
+      summaryList:[],//成绩汇总列表
+    };
+  },
+  mounted() {
+    const that = this;
+    that.getRecommendIndex();
+  },
+  methods: {
+    //学期课程综合成绩汇总
+    getAchievementSummary() {
+      const that = this;
+      let params = {
+        courseId: that.cname.courseId,
+        termId: that.cname.termId
+      };
+      this.utils.api.AchievementSummary(params).then(res => {
+        if (res.code == 20200) {
+          that.summaryList = res.data;
+        } else {
+          that.$message.error(res.msg);
+        }
+      });
+    },
+    //学期课程学生成绩列表
+    getListofAchievements() {
+      const that = this;
+      let params = {
+        courseId: that.cname.courseId,
+        termId: that.cname.termId
+      };
+      this.utils.api.ListofAchievements(params).then(res => {
+        if (res.code == 20200) {
+          that.achievementList = res.data.list;
+        } else {
+          that.$message.error(res.msg);
+        }
+      });
+    },
+    //课程列表
+    getRecommendIndex() {
+      const that = this;
+      this.utils.api.RecommendIndex().then(res => {
+        if (res.code == 20200) {
+          that.courseList = JSON.parse(JSON.stringify(res.data)); //课程
+          that.cname = res.data[0];
+          that.getListofAchievements();
+          that.getAchievementSummary();
+        } else {
+          that.$message.error(res.msg);
+        }
+      });
+    },
+    showToggle() {
+      this.dropshow = !this.dropshow;
+    },
+    //选择班级重新加载
+    fungetRate(cid, tid, cname) {
+      const that = this;
+      let params = {
+        courseId: cid,
+        termId: tid
+      };
+      this.utils.api.ListofAchievements(params).then(res => {
+        if (res.code == 20200) {
+          that.achievementList = res.data.list;
+          that.cname.courseName = cname;
+          this.dropshow = !this.dropshow;
+        } else {
+          that.$message.error(res.msg);
+        }
+      });
+      this.utils.api.AchievementSummary(params).then(res => {
+        if (res.code == 20200) {
+          that.summaryList = res.data;
+        } else {
+          that.$message.error(res.msg);
+        }
+      });
+    }
+  },
+  head() {
+    return {
+      title: "天天通识-成绩管理"
+    };
+  }
 }
 </script>
 <style>

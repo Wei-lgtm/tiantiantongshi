@@ -1,5 +1,5 @@
 <template>
-  <div class="mainer">
+  <div class="mainer" v-loading="load">
     <div class="wrap">
       <div class="page_left">
         <ul>
@@ -47,23 +47,13 @@
       </div>
       <div class="page_right">
         <div class="course_sel">
-          <span @click="showToggle()">{{cname.courseName}}</span>
-          <div class="drop" v-show="dropshow">
-            <ul>
-              <li
-                v-for="(item,index) in courseList"
-                :key="index"
-                @click="fungetRate(item)"
-              >{{item.courseName}}</li>
-              <!--item.courseId,item.termId,item.courseName-->
-            </ul>
-          </div>
+          <span>陈志武教授金融通识课_2019年秋季</span>
         </div>
         <div class="chart">
           <div class="left">
             <div class="tit">
               <h3>学习总进度</h3>
-              <span>当前计划进度：{{courseList.planProgress?courseList.planProgress:'0'}}%</span>
+              <span>当前计划进度：11%</span>
               <div class="clear"></div>
             </div>
             <div class="chart_pie">
@@ -87,8 +77,6 @@
               <div class="clear"></div>
             </div>
             <div class="chart_line">
-              <!-- <v-chart :options="line"/> -->
-              <!-- <div id="linechar" :style="{width:'100%',height:'100%'}"></div> -->
               <img src="@/assets/img/tb2.jpg">
             </div>
           </div>
@@ -98,12 +86,12 @@
           <div class="title">
             <h3>详情</h3>
             <div class="title_search">
-              <input type="text" v-model="classname" placeholder="请输入班级">
-              <a href="javascript:void(0)" @click="search"></a>
+              <input type="text" placeholder="请输入学生姓名\学号">
+              <a href="#"></a>
             </div>
             <div class="title_btn">
               <span>
-                <a class="a1" href="#" @click="showDcxx=true">督促学习</a>
+                <a class="a1" href="#">督促学习</a>
               </span>
               <span>
                 <a class="a2" href="#">导出名单</a>
@@ -111,43 +99,69 @@
             </div>
             <div class="clear"></div>
           </div>
-          <div class="tab_box">
+          <div class="tab_box tab_box1">
+            <div class="tab_box_cha">
+              <ul>
+                <li class="on">
+                  <label>
+                    <span>全部学生</span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <span>快于计划</span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <span>慢于计划</span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <span>
+                      学习进度低于
+                      <font>20%</font>%
+                    </span>
+                  </label>
+                </li>
+              </ul>
+              <div class="clear"></div>
+            </div>
             <table cellpadding="0" cellspacing="0">
               <thead>
-                <tr>
-                  <th>班级名称</th>
-                  <th>辅导老师</th>
-                  <th>选修人数</th>
-                  <th>
-                    班级平均
-                    <br>进度(%）
-                  </th>
-                  <th>快于计划</th>
-                  <th>慢于计划</th>
-                  <th>没有学习</th>
-                </tr>
+              <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>学习进度</th>
+                <th>累计学时</th>
+                <th>笔记数</th>
+                <th>最后登录时间</th>
+                <th>
+                  <label>选择</label>
+                </th>
+              </tr>
               </thead>
               <tbody>
-                <tr v-for="(item,index) in classProgress" :key="index">
-                  <td>
-                    <nuxt-link
-                      :to="{path:'2-kcjd-bjxq',query:{courseid:item.courseId,termid:item.termId,classid:item.classId}}"
-                    >{{item.className}}</nuxt-link>
-                  </td>
-                  <td>{{item.teacherName}}</td>
-                  <td>{{item.studentTotal}}</td>
-                  <td>{{item.learningRate}}</td>
-                  <td>{{item.faster}}</td>
-                  <td>{{item.slower}}</td>
-                  <td>{{item.noLearn}}</td>
-                </tr>
+              <tr v-for="(item,index) in classList" :key="index">
+                <td>
+                  <a href="#">{{item.studentNo}}</a>
+                </td>
+                <td>{{item.studentName}}</td>
+                <td>{{item.progressPercent}}%</td>
+                <td>{{item.playtimes}}</td>
+                <td>{{item.note}}</td>
+                <td>{{item.lastlogin}}</td>
+                <td>
+                  <label></label>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div class="clear"></div>
-      <dcxx :showDcxx.sync="showDcxx"/>
     </div>
   </div>
 </template>
@@ -160,107 +174,53 @@ export default {
   },
   data() {
     return {
-      showDcxx: false,
-      courseList: [], //課程列表
-      classProgress: [], //班级进度列表
-      courseScheduleLlist: [], //课程总进度列表
-      dropshow: false,
-      cname: [],
+      courseid:0,
+      termid:0,
+      classid:0,
+      classList:[],
+      type:1,
+      load:false,
       progresslsit: [],
       pie: {},
-      LearnTrendslist: [],
-      datatime: "",
-      classname: ""
+      LearnTrendslist:[],
+      datatime:'',
     };
   },
   mounted() {
     const that = this;
-    that.getRecommendIndex();
+    that.courseid = that.$route.query.courseid
+    that.termid = that.$route.query.termid
+    that.classid = that.$route.query.classid
+
+    that.classCourseReportDetail()
+    that.LearnProgress();
   },
   methods: {
-    getTime() {
+    //班级学习进度报表
+    classCourseReportDetail() {
       const that = this;
-      that.datatime = JSON.parse(new Date().getDate()) + 1;
-    },
-    search() {
-      const that = this;
-      that.getRatelearning();
-    },
-    //班级学习进度
-    getRatelearning() {
-      const that = this;
-      let params = {
-        courseId: that.cname.courseId,
-        termId: that.cname.termId,
-        className: that.classname
-      };
-      this.utils.api.ratelearning(params).then(res => {
+      let params={
+        courseId:that.courseid,
+        termId:that.termid,
+        classId:that.classid,
+        type:that.type
+      }
+      that.load=true
+      this.utils.api.ClassCourseReportDetail(params).then(res => {
+        that.load=false
         if (res.code == 20200) {
-          that.classProgress = res.data;
-        } else {
-          that.$message.error(res.msg);
+          that.classList = res.data; //课程
+        }else{
+          that.$message.error(res.msg)
         }
       });
     },
-    //课程总进度
-    getcourseSchedule() {
-      const that = this;
-      let params = {
-        courseId: that.cname.courseId,
-        termId: that.cname.termId
-      };
-      this.utils.api.courseSchedule(params).then(res => {
-        if (res.code == 20200) {
-          that.courseScheduleLlist = res.data;
-        } else {
-          that.$message.error(res.msg);
-        }
-      });
-    },
-    //课程列表
-    getRecommendIndex() {
-      const that = this;
-      this.utils.api.RecommendIndex().then(res => {
-        if (res.code == 20200) {
-          that.courseList = JSON.parse(JSON.stringify(res.data)); //课程
-          that.cname = res.data[0];
-          that.getRatelearning();
-          that.getcourseSchedule();
-          that.LearnProgress();
-          that.LearnTrends();
-        }
-      });
-    },
-    showToggle() {
-      this.dropshow = !this.dropshow;
-    },
-    //选择班级重新加载
-    fungetRate(item) {
-      //cid, tid, cname
-      const that = this;
-      let params = {
-        courseId: item.courseId,
-        termId: item.termId
-      };
-      //班级学习进度
-      this.utils.api.ratelearning(params).then(res => {
-        if (res.code == 20200) {
-          that.classProgress = res.data;
-          that.cname = item;
-          this.dropshow = !this.dropshow;
-          that.LearnProgress();
-          that.LearnTrends();
-        } else {
-          that.$message.error(res.msg);
-        }
-      });
-    },
-    //学习总进度
     LearnProgress() {
       const that = this;
       let params = {
-        courseId: that.cname.courseId,
-        termId: that.cname.termId
+        courseId: that.courseid,
+        termId: that.termid,
+        classId:that.classid
       };
       this.utils.api.LearnProgress(params).then(res => {
         if (res.code == 20200) {
@@ -278,20 +238,20 @@ export default {
               trigger: "item",
               formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            graphic: {
-              type: "text",
-              left: "center",
-              top: "center",
-              z: 2,
-              zlevel: 100,
-              style: {
-                text: "选修人数\n" + res.data.total,
-                x: 100,
-                y: 100,
-                textAlign: "center",
-                fill: "#999",
-                width: 30,
-                height: 30
+            graphic:{
+              type:'text',
+              left:'center',
+              top:'center',
+              z:2,
+              zlevel:100,
+              style:{
+                text:'选修人数\n'+ res.data.total,
+                x:100,
+                y:100,
+                textAlign:'center',
+                fill:'#999',
+                width:30,
+                height:30
               }
             },
             color: ["#8dcfcb", "#33b0ff", "#ff9934"],
@@ -340,49 +300,11 @@ export default {
         }
       });
     },
-    //学习趋势
-    LearnTrends() {
-      const that = this;
-      let params = {
-        courseId: that.cname.courseId,
-        termId: that.cname.termId,
-        type: 2
-      };
-      this.utils.api.LearnTrends(params).then(res => {
-        if (res.code == 20200) {
-          that.LearnTrendslist = res.data;
-        } else {
-          that.$message.error(res.msg);
-        }
-      });
-    },
-    getLineChart() {
-      const that = this;
-      var myChart = echarts.init(document.getElementById("linechar"));
-      myChart.setOption({
-        xAxis: {
-          type: "category",
-          data: ["0", "6H", "9H", "12H", "15H", "18H", "24H"]
-        },
-        yAxis: {
-          type: "value"
-        },
-        series: [
-          {
-            data: [1, 3, 4, 7, 4, 6, 9],
-            type: "line"
-          }
-        ]
-      });
-    }
   },
-  created() {
-    this.getTime();
-  },
-  head() {
+  head(){
     return {
-      title: "天天通识-课程进度"
-    };
+      title:'天天通识-课程进度'
+    }
   }
 };
 </script>

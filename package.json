@@ -1,5 +1,5 @@
 {
-  "name": "tiantiantongshi",
+  "name": "Generalknowledgeeveryday",
   "version": "1.0.0",
   "description": "My transcendent Nuxt.js project",
   "author": "Wei-lgtm",
@@ -7,20 +7,23 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "start": "cross-env NODE_ENV=production pm2 start server/index.js --name='nuxt'",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.5.4",
     "cross-env": "^5.2.0",
     "crypto": "^1.0.1",
+    "echarts": "^4.2.1",
     "element-ui": "^2.9.1",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
     "jquery": "^3.4.1",
     "js-md5": "^0.7.3",
     "js-sha256": "^0.9.0",
     "nuxt": "^2.0.0",
     "pm2": "^3.5.1",
+    "vue-echarts": "^4.0.3",
     "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
@@ -32,7 +35,7 @@
   "config": {
     "nuxt": {
       "host": "0.0.0.0",
-      "port": 8080
+      "port": 8060
     }
   }
 }

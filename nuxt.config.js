@@ -5,7 +5,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: '天天通识',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -31,7 +31,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-	{ src:'@/plugins/vue-utils', ssr:false}
+    { src:'@/plugins/vue-utils', ssr:false},
+    { src:'@/plugins/vue-echarts', ssr:false}
   ],
   /*
   ** Nuxt.js modules
@@ -48,10 +49,20 @@ module.exports = {
   proxy:{
     "/api": {
       target: "http://qasapi.lumibayedu.com/",
+      // target: "https://api.lumibayedu.com/",
       secure: true,
       changeOrigin: true,
       pathRewrite: {
         "^/api": "/"
+      }
+    },
+    "/qasschool": {
+      target: "http://qasschoolapi.lumibayedu.com/",
+      // target: "https://schoolapi.lumibayedu.com/",
+      secure: true,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/qasschool": "/"
       }
     }
   },
@@ -62,7 +73,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    transpile: [/^element-ui/],
+    transpile: ['vue-echarts', 'resize-detector',/^element-ui/],
     extractCSS: {allChunks: true},
     extend(config, ctx) {
     },

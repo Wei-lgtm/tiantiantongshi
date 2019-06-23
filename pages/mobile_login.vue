@@ -6,35 +6,23 @@
           <img src="@/assets/img/logo.png">
         </div>
         <div class="log_chg">
-          <nuxt-link to="/mobile_login">手机验证码登录</nuxt-link>
+          <nuxt-link to="/login">账号密码登录</nuxt-link>
         </div>
         <div class="clear"></div>
         <div class="tab">
           <div class="item">
             <span class="span1"></span>
             <div class="div_inp">
-              <input
-                class="inp_mob"
-                @keyup.enter="handleScroll"
-                v-model="mobile"
-                type="text"
-                placeholder="请输入用户名/手机号"
-                maxlength="11"
-              >
+              <input class="inp_mob" v-model="mobile" type="text" maxlength="11" placeholder="请输入手机号">
             </div>
             <div class="clear"></div>
           </div>
           <div class="item">
-            <span class="span2"></span>
             <div class="div_inp">
-              <input
-                class="inp_pwd"
-                @keyup.enter="handleScroll"
-                v-model="password"
-                type="password"
-                placeholder="请输入密码"
-                maxlength="20"
-              >
+              <input class="inp_pwd" v-model="verification" type="text" placeholder="请输入验证码">
+            </div>
+            <div class="mob_yzm">
+              <a href="javascript:void(0)" @click="SendSms">{{zt?'获取验证码':time}}</a>
             </div>
             <div class="clear"></div>
           </div>
@@ -43,7 +31,7 @@
           </div>
         </div>
         <div class="btn">
-          <a class="btn_login" href="javascript:void(0)" @click="login()">立即登录</a>
+          <a class="btn_login" href="#" @click="login()">立即登录</a>
         </div>
         <div class="rem_pwd">
           <label>
@@ -57,13 +45,16 @@
 </template>
 <script>
 import { aesDecrypt } from "@/utils/crypto";
+import { clearInterval } from "timers";
 export default {
   components: {},
   data() {
     return {
       mobile: "", //手机号i
-      password: "", //密码
-      enter: true
+      enter: true,
+      verification: "",
+      time: "5 s",
+      zt: true
     };
   },
   watch: {
@@ -108,17 +99,17 @@ export default {
       const that = this;
       let params = {
         mobile: that.mobile,
-        password: that.password
+        code: that.verification
       };
       if (!that.mobile) {
         return false;
       }
-      if (!that.password) {
+      if (!that.verification) {
         return false;
       }
       if (that.enter) {
         that.enter = false;
-        this.utils.api.usernameLogin(params).then(res => {
+        this.utils.api.SmsLogin(params).then(res => {
           that.enter = true;
           if (res.code == 20200 && res.data.userType == 4) {
             that.$store.commit("setUserInfo", res.data);
@@ -132,11 +123,41 @@ export default {
           }
         });
       }
+    },
+    SendSms() {
+      const that = this;
+      let regular = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+      if (that.zt) {
+        if (regular.test(that.mobile)) {
+          let params = {
+            mobile: that.mobile
+          };
+          this.utils.api.SendSms(params).then(res => {
+            if (res.code == 20200) {
+              that.$message.success("发送成功！");
+              that.zt = false;
+              let s = 5;
+              let mobcode = setInterval(function() {
+                s--;
+                that.time = s + " s";
+                if (s <= 0) {
+                  that.zt = true;
+                  that.time = "5 s";
+                  window.clearInterval(mobcode);
+                }
+              }, 1000);
+            } else {
+            }
+          });
+        } else {
+          that.$message.error("请输入正确的手机号");
+        }
+      }
     }
   },
   head(){
     return {
-      title:'天天通识-账号密码登录'
+      title:'天天通识-手机验证码登录'
     }
   }
 };

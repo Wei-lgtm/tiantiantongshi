@@ -1,0 +1,49 @@
+
+服务器安装node
+
+node -v 检测安装是否成功
+
+
+再安装pm2
+
+npm install pm2 -g
+
+
+将文件上传服务器
+
+package.json里的 config.nuxt.port 为项目运行端口  可以改成自己开放的端口
+
+
+
+以上步骤全部完成后  在项目根目录执行
+
+npm install
+
+
+依赖包安装完成后  
+
+
+npm run start 启动项目
+
+
+
+
+
+关于跨域
+
+最简单  后台允许前端项目ip跨域
+
+较复杂  使用nginx代理  https://www.cnblogs.com/renjing/p/6394725.html
+
+
+
+
+
+
+
+
+
+
+
+
+

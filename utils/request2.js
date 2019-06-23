@@ -5,7 +5,7 @@ import { aesEncrypt, aesDecrypt } from '@/utils/crypto'
 
 var server = axios.create({})
 
-server.defaults.baseURL = process.client ? (process.env.NODE_ENV == 'development' ? '/api' : 'http://qasapi.lumibayedu.com/') : 'http://qasapi.lumibayedu.com/'
+server.defaults.baseURL = process.client ? (process.env.NODE_ENV == 'development' ? '/qasschool' : 'http://qasschoolapi.lumibayedu.com/') : 'http://qasschoolapi.lumibayedu.com/'
 server.defaults.timeout = 60000
 server.defaults.withCredentials = false
 server.defaults.crossDomain = true
@@ -14,15 +14,11 @@ const time = new Date().getTime()
 let sign = time + md5('@@@www.lumibayedu.com!@#')
 sign = sha256(md5(sign))
 
-server.defaults.headers.common['sign'] = sign
 server.defaults.headers.common['platform'] = 'pc_teach'
 server.defaults.headers.common['version'] = '1.0.0'
 server.defaults.headers.common['accessTime'] = time
+server.defaults.headers.common['sign'] = sign
 // server.defaults.headers.common['uid'] = 0
-
-if(!sessionStorage.getItem("sign")){
-    sessionStorage.setItem("sign",sign)
-}
 
 server.interceptors.request.use(
     config => {
@@ -33,6 +29,11 @@ server.interceptors.request.use(
         if(sessionStorage.getItem("SUCCESS")){
             userInfo = JSON.parse( aesDecrypt(sessionStorage.getItem("SUCCESS") , 'abc') )
         }
+        // if(sessionStorage.getItem("sign")){
+        //     config.headers.common['sign'] = sessionStorage.getItem("sign")
+        // }else{
+        //     config.headers.common['sign'] = 'error'
+        // }
         config.headers.common['accessToken'] = sessionStorage.getItem("token") || '';
         config.headers.common['uid'] =  userInfo.uid
         return config
