@@ -11,7 +11,7 @@
                     <div class="mod_kkg_top">
                       <div class="course_sel">
                         <div class="course_sel_name">学期：</div>
-                        <span @click="showToggle()">{{kkglcname.termName}}</span>
+                        <span @click="showToggle()">{{kkglcname.termName || ""}}</span>
                         <div class="clear"></div>
                         <div class="cdrop" v-show="cdropShow">
                           <ul>
@@ -20,12 +20,12 @@
                         </div>
                       </div>
                         <div class="semester">
-                            <p><em><a href="javascript:void(0);" @click="dropShow=true">添加</a></em></p>
+                            <p><em><a ondragstart="return false" href="javascript:void(0);" @click="dropShow=true">添加</a></em></p>
                             <div class="drop" v-if="dropShow">
                                 <div class="box">
-                                    <div class="drop_close" @click="dropShow=false"></div>
+                                    <div class="drop_close" @click="fundropShow"></div>
                                     <div class="semester_add">
-                                        <input type="text" placeholder="请输入添加的学期" v-model="content" /><a href="javascript:void(0)" @click="TermAdd()">确定</a>
+                                        <input type="text" placeholder="请输入添加的学期" v-model="content" /><a ondragstart="return false" href="javascript:void(0)" @click="TermAdd()">确定</a>
                                     </div>
                                     <div class="semester_tab">
                                         <h4>学期列表</h4>
@@ -38,7 +38,7 @@
                                             <tr v-for="(item,index) in sterlist" :key="index">
                                                 <td>{{item.termName}}</td>
                                                 <td>自定义</td>
-                                                <td><a href="javascript:void(0)" @click="funDelTerm(item.id)">删除</a></td>
+                                                <td><a ondragstart="return false" href="javascript:void(0)" @click="funDelTerm(item.id)">删除</a></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="mod_btn">
-                            <a class="a1" href="javascript:void(0)" @click="CourseAccredit">确定</a><a href="javascript:void(0)" @click="close()">取消</a>
+                            <a ondragstart="return false" class="a1" href="javascript:void(0)" @click="CourseAccredit">确定</a><a ondragstart="return false" href="javascript:void(0)" @click="close()">取消</a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 </template>
 <script>
 export default {
-  props: ["showKkgl","semesterList","cname","onsubmit"],
+  props: ["showKkgl","semesterList","cname","onsubmit","ongetindex"],
   components: {},
   data() {
     return {
@@ -91,9 +91,10 @@ export default {
       cdropShow:false,
       content:'',
       sterlist:[],
-      termCourse:[],
+      termcourse:[],
       kkglcname:{},
-      termid:0
+      termid:0,
+      arr1:[]
     };
   },
   watch:{
@@ -102,6 +103,12 @@ export default {
     },
     cname:function(newVal,oldVal){
       this.kkglcname=newVal
+    },
+    termId:function(newVal,oldVal){
+      this.termid=newVal
+    },
+    termCourse:function(newVal,oldVal){
+      this.termcourse=newVal
     },
     showKkgl:function(newVal,oldVal){
       this.CourseAccreditList()
@@ -112,6 +119,11 @@ export default {
     that.sterlist = that.semesterList
   },
   methods: {
+    fundropShow(){
+      const that = this
+      that.dropShow = false
+      that.content=""
+    },
     close() {
       this.$emit("update:showKkgl", false);
     },
@@ -124,6 +136,14 @@ export default {
       this.utils.api.GetIndex().then(res =>{
         if(res.code==20200){
           that.sterlist = res.data
+          if(res.data.length > 0){
+            that.kkglcname = that.sterlist[0]
+          }else{
+            that.kkglcname ={
+              id:0,
+              termName:'',
+            }
+          }
         }else{
           that.$message.error(res.msg)
         }
@@ -132,6 +152,10 @@ export default {
     //添加学期
     TermAdd(){
       const that = this
+      if(!that.content){
+        that.$message.error('请输入添加的学期名')
+        return false;
+      }
       let params = {
         termName:that.content
       }
@@ -140,6 +164,7 @@ export default {
           that.content=''
           that.$message.success('添加成功！')
           that.funGetIndex()
+          that.ongetindex()
         }else{
           that.$message.error(res.msg)
         }
@@ -155,6 +180,7 @@ export default {
         if(res.code==20200){
           that.$message.success('删除成功！')
           that.funGetIndex()
+          that.ongetindex()
         }else{
           that.$message.error(res.msg)
         }
@@ -166,12 +192,11 @@ export default {
       this.utils.api.CourseAccreditList().then(res => {
         if(res.code == 20200){
           let arr=[]
-          let arr1 = that.$store.getters.termCourse
-          for(let i=0;i<arr1.length;i++){
-            arr.push(arr1[i].courseId)
+          that.arr1 = that.$store.getters.termCourse
+          for(let i=0;i<that.arr1.length;i++){
+            arr.push(that.arr1[i].courseId)
           }
           for(let i=0;i<res.data.list.length;i++){
-            console.log(res.data.list[i].courseId)
             if(arr.indexOf(res.data.list[i].courseId)>-1){
               res.data.list[i].check=true
               res.data.list[i].checked=true
@@ -179,7 +204,6 @@ export default {
               res.data.list[i].check=false
             }
           }
-          console.log(arr)
           that.authorizedCourses = res.data.list//学校已授权课程
         }else{
           that.$message.error(res.msg)
@@ -189,11 +213,28 @@ export default {
     //选择学期重新加载
     fungetRate(tid, tname) {
       const that = this;
-      that.termId = tid
+      that.termid = tid
       that.TermCourseList()
+      
       that.cname.termName = tname;
       that.cname.id=tid;
       this.cdropShow = !this.cdropShow;
+    },
+    //学期选课课程列表
+    TermCourseList(){
+      const that = this
+      let params = {
+        termId:that.termid
+      }
+      this.utils.api.TermCourseList(params).then(res => {
+          if (res.code == 20200) {
+            that.termcourse = res.data.list;
+            that.$store.commit('setTermCourse',that.termcourse)
+            that.CourseAccreditList();
+          } else {
+          that.$message.error(res.msg);
+        }
+      });
     },
     //学期课程授权
     CourseAccredit(){
@@ -209,10 +250,15 @@ export default {
           }
         }
       }
+      if(cidlist.length < 1){
+        that.$message.error('请选择需要添加的课程！')
+        return false;
+      }
       let params = {
         termId : that.termid,
         courseIds:cidlist
       }
+      
       this.utils.api.CourseAccredit(params).then(res => {
         if(res.code == 20200){
           that.close();

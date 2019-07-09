@@ -1,58 +1,17 @@
 <template>
+<div>
+    <Header/>
   <div class="mainer">
     <div class="wrap">
-      <div class="page_left">
-        <ul>
-          <li>
-            <nuxt-link to="/">
-              <span>我的课程</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/2-kcjd">
-              <span>课程进度</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/3-zyks">
-              <span>作业考试</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/4-cjgl">
-              <span>成绩管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/5-xjgl">
-              <span>学籍管理</span>
-            </nuxt-link>
-          </li>
-          <li class="on">
-            <nuxt-link to="/6-kcgl">
-              <span>课程管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/7-jsgl">
-              <span>教师管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/8-jgsz">
-              <span>学校设置</span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <LeftNav />
       <div class="page_right">
         <div class="crumbs">
           <p>
-            <a href="#">陈志武教授金融通识课_2019年秋季</a> >
-            <a href="#">选课管理</a> >
-            <a class="on" href="#">19计算机1班</a>
+            <a ondragstart="return false" href="javascript:void(0)">{{coursename}}</a> >
+            <a href="javascript:void(0)" ondragstart="return false">选课管理</a> >
+            <a class="on" href="javascript:void(0)" ondragstart="return false">19计算机1班</a>
             <span>
-              <a href="javascript:void(0)" @click="back">
+              <a href="javascript:void(0)" ondragstart="return false" @click="back">
                 <em>返回</em>
               </a>
             </span>
@@ -62,14 +21,15 @@
           <div class="title">
             <div class="title_search">
               <input type="text" v-model="keywords" placeholder="请输入学生姓名/学号/手机号码">
-              <a href="javascript:void(0)" @click="search"></a>
+              <a ondragstart="return false" href="javascript:void(0)" @click="search"></a>
             </div>
             <div class="title_btn">
               <span>
                 <label :class="checkde?'on':''" @click="getTermCourseClassStudentList">仅显示未提交期末考试的学生</label>
               </span>
               <span>
-                <a class="a2" href="#">导出名单</a>
+                <a ondragstart="return false" class="a2" @click="winhref">导出名单</a>
+                <!-- <a class="a2" href="javascript:void(0)" @click="funexport">导出名单</a> -->
               </span>
             </div>
             <div class="clear"></div>
@@ -96,11 +56,19 @@
                   <td>{{item.isExamName}}</td>
                   <td>{{item.resitExamScore}}</td>
                   <td>
-                    <a href="javascript:void(0)" @click="funYcxs(item)">移出</a>
+                    <a ondragstart="return false" href="javascript:void(0)" @click="funYcxs(item)">移出</a>
                   </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="pageSize" v-if="total > 10">
+            <el-pagination
+              layout="prev, pager, next"
+              :current-page="page"
+              @current-change="getpage"
+              :total="total"
+            ></el-pagination>
           </div>
         </div>
       </div>
@@ -112,12 +80,18 @@
       />
     </div>
   </div>
+</div>
 </template>
 <script>
 import Ycxs from "@/components/ycxs";
+import Header from "@/components/Header";
+import LeftNav from "@/components/left_nav";
+import domainName from "@/config/main";
 export default {
   components: {
-    Ycxs
+    Ycxs,
+    Header,
+    LeftNav
   },
   data() {
     return {
@@ -129,6 +103,12 @@ export default {
       ycxsitem: {},
       checkde: false,
       keywords: "",
+      ifsearch:false,
+      page:1,
+      pageSize:10,
+      total:0,
+      isExam:1,
+      coursename:'',
     };
   },
   mounted() {
@@ -136,10 +116,39 @@ export default {
     that.courseid = this.$route.query.courseid;
     that.termid = this.$route.query.termid;
     that.classid = this.$route.query.classid;
+    that.coursename = this.$route.query.title;
 
     that.TermCourseClassStudentList();
   },
   methods: {
+    winhref() {
+      const that = this;
+      let arr = "" + this.$route.query.classid;
+      if(that.checkde){
+        that.isExam = 0
+      }else{
+        that.isExam = 1
+      }
+        window.location.href =
+          // "http://qasschoolapi.lumibayedu.com/student/termCourseClassStudentExport?termId=" +
+          domainName + "/student/termCourseClassStudentExport?termId=" +
+          that.termid +
+          "&courseId=" +
+          that.courseid +
+          "&classId=" +
+          arr +
+          "&keywords=" +
+          that.keywords +
+          "&isExam=" +
+          that.isExam +
+          "&schoolId=" + 
+          this.$store.getters.user.schoolId;
+    },
+    getpage(e){
+      const that = this
+      that.page=e
+      that.TermCourseClassStudentList();
+    },
     //获取指定学期课程班级学生统计列表
     TermCourseClassStudentList() {
       const that = this;
@@ -148,13 +157,34 @@ export default {
         termId: that.termid,
         classId: that.classid,
         isExam: that.checkde ? "0" : "1",
-        keywords: that.keywords
+        keywords: that.keywords,
+        page:that.page,
+        pageSize:that.pageSize,
       };
       this.utils.api.TermCourseClassStudentList(params).then(res => {
         if (res.code == 20200) {
+          if (that.ifsearch) {
+            if (res.data.list.length < 1) {
+              that.$message.error("当前搜索无结果");
+              that.ifsearch = !that.ifsearch
+            }
+          }
           that.courseselection = res.data.list;
-        } else {
+          that.total = res.data.total
+        }
+        if (res.code == 20106) {
+          that.$message.error("身份验证信息已过期，请重新登录");
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        }
+        if (res.code == 20201) {
           that.$message.error(res.msg);
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        } else {
+          // that.$message.error(res.msg);
         }
       });
     },
@@ -162,10 +192,13 @@ export default {
     getTermCourseClassStudentList() {
       const that = this;
       that.checkde = !that.checkde;
+      that.page = 1
       that.TermCourseClassStudentList();
     },
     search() {
       const that = this;
+      that.ifsearch = true
+      that.page = 1
       that.TermCourseClassStudentList();
     },
     funYcxs(item) {

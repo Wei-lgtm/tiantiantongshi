@@ -5,7 +5,8 @@ import { aesEncrypt, aesDecrypt } from '@/utils/crypto'
 
 var server = axios.create({})
 
-server.defaults.baseURL = process.client ? (process.env.NODE_ENV == 'development' ? '/api' : 'http://qasapi.lumibayedu.com/') : 'http://qasapi.lumibayedu.com/'
+// server.defaults.baseURL = process.client ? (process.env.NODE_ENV == 'development' ? '/api' : 'http://qasapi.lumibayedu.com/') : 'http://qasapi.lumibayedu.com/'
+server.defaults.baseURL = process.client ? (process.env.NODE_ENV == 'development' ? '/api' : 'https://api.lumibayedu.com/') : 'https://api.lumibayedu.com/'
 server.defaults.timeout = 60000
 server.defaults.withCredentials = false
 server.defaults.crossDomain = true
@@ -45,6 +46,12 @@ server.interceptors.request.use(
 
 server.interceptors.response.use(
     response => {
+        if(response.data.code == 20106){
+            $nuxt.$store.commit('setTokenbool',false)
+        }
+        if(response.data.code == 20201){
+            $nuxt.$store.commit('setLoginbool',false)
+        }
         return response.data
     },
     error => {

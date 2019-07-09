@@ -1,50 +1,9 @@
 <template>
+<div>
+    <Header/>
   <div class="mainer">
     <div class="wrap">
-      <div class="page_left">
-        <ul>
-          <li>
-            <nuxt-link to="/">
-              <span>我的课程</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/2-kcjd">
-              <span>课程进度</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/3-zyks">
-              <span>作业考试</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/4-cjgl">
-              <span>成绩管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/5-xjgl">
-              <span>学籍管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/6-kcgl">
-              <span>课程管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/7-jsgl">
-              <span>教师管理</span>
-            </nuxt-link>
-          </li>
-          <li class="on">
-            <nuxt-link to="/8-jgsz">
-              <span>学校设置</span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <LeftNav />
       <div class="page_right">
         <div class="page_tit">
           <h3>机构设置</h3>
@@ -83,25 +42,32 @@
           <div class="clear"></div>
         </div>
         <div class="mechanism_btn">
-          <a href="javascript:void(0)" @click="SchoolEdit">确认</a>
-          <a class="a1" href="javascript:void(0)" @click="remove">取消</a>
+          <a ondragstart="return false" href="javascript:void(0)" @click="SchoolEdit">确认</a>
+          <a ondragstart="return false" class="a1" href="javascript:void(0)" @click="remove">取消</a>
         </div>
       </div>
       <div class="clear"></div>
     </div>
   </div>
+</div>
 </template>
 <script>
+import Header from "@/components/Header";
+import LeftNav from "@/components/left_nav";
 export default {
-  components: {},
+  components: {
+    Header,
+    LeftNav
+  },
   data() {
     return {
       userinfo: [], //教师信息
       schollName: "",
-      defImg: require("../../assets/img/img7.png"),
+      defImg: require("../assets/img/img7.png"),
       imageUrl: "",
       upimg:'',
-      filelist:[]
+      filelist:[],
+      
     };
   },
   mounted() {
@@ -116,8 +82,21 @@ export default {
         if (res.code == 20200) {
           that.userinfo = res.data;
           that.schollName = res.data.schoolName;
-        } else {
+          that.$store.commit("setUser", res.data);
+        }
+        if (res.code == 20106) {
+          that.$message.error("身份验证信息已过期，请重新登录");
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        }
+        if (res.code == 20201) {
           that.$message.error(res.msg);
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        } else {
+          // that.$message.error(res.msg);
         }
       });
     },
@@ -147,9 +126,11 @@ export default {
     SchoolEdit(){
       const that = this
       if(!that.schollName){
+         that.$message.error('请填写学校名称！')
         return false;
        }
        if(!that.upimg){
+         that.$message.error('请选择上传图片！')
          return false;
        }
       let params = {
@@ -197,6 +178,10 @@ export default {
     }
     i::before {
       content: "";
+    }
+    img{
+      height: 90px;
+      width: 90px;
     }
   }
   span {

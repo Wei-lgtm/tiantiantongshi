@@ -1,57 +1,16 @@
 <template>
+<div>
+    <Header/>
   <div class="mainer">
     <div class="wrap">
-      <div class="page_left">
-        <ul>
-          <li>
-            <nuxt-link to="/">
-              <span>我的课程</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/2-kcjd">
-              <span>课程进度</span>
-            </nuxt-link>
-          </li>
-          <li class="on">
-            <nuxt-link to="/3-zyks">
-              <span>作业考试</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/4-cjgl">
-              <span>成绩管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/5-xjgl">
-              <span>学籍管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/6-kcgl">
-              <span>课程管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/7-jsgl">
-              <span>教师管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/8-jgsz">
-              <span>学校设置</span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <LeftNav />
       <div class="page_right">
         <div class="crumbs">
           <p>
-            <a href="#">陈志武教授金融通识课_2019年秋季</a> >
-            <a href="#">期末考试</a>
+            <a href="javascript:void(0)" ondragstart="return false">{{coursename}}</a> >
+            <a href="javascript:void(0)" ondragstart="return false">{{title}}</a>
             <span>
-              <a href="#">
+              <a href="javascript:void(0)" @click="back" ondragstart="return false">
                 <em>返回</em>
               </a>
             </span>
@@ -91,7 +50,7 @@
               </div>
             </div>
           </div>
-          <div class="right">
+          <!-- <div class="right">
             <div class="tit">
               <h3>成绩人数分布</h3>
               <div class="clear"></div>
@@ -99,16 +58,16 @@
             <div class="chart_bar">
               <img src="~/assets/img/tb3.jpg">
             </div>
-          </div>
+          </div> -->
           <div class="clear"></div>
         </div>
         <div class="page_tab">
           <div class="title">
             <h3>成绩</h3>
-            <div class="title_search">
-              <input type="text" placeholder="请输入学生姓名\学号">
+            <!-- <div class="title_search">
+              <input type="text" placeholder="请输入学生姓名\学号">接口差关键词字段
               <a href="#"></a>
-            </div>
+            </div> -->
             <div class="clear"></div>
           </div>
           <div class="tab_box tab_box1">
@@ -129,7 +88,7 @@
                   <td>{{item.updateTime}}</td>
                   <td>{{item.score}}</td>
                   <td>
-                    <nuxt-link :to="{path:'3-zyks-sjxsxq',query:{termid:item.termId,courseid:item.courseId,lessonid:item.lessonId,assessid:item.assessId,studentid:item.studentId,title:title}}">
+                    <nuxt-link ondragstart="return false" :to="{path:'/3-zyks-sjxsxq',query:{termid:item.termId,courseid:item.courseId,lessonid:item.lessonId,assessid:item.assessId,studentid:item.studentId,title:title}}">
                       详情
                     </nuxt-link>
                   </td>
@@ -142,10 +101,16 @@
       <div class="clear"></div>
     </div>
   </div>
+  </div>
 </template>
 <script>
+import Header from "@/components/Header";
+import LeftNav from "@/components/left_nav";
 export default {
-  components: {},
+  components: {
+    Header,
+    LeftNav
+  },
   data() {
     return {
       stutestList: [], //试卷列表
@@ -156,6 +121,7 @@ export default {
       classid:0,
       title:'',
       acsummary:[],
+      coursename:'',
     };
   },
   mounted() {
@@ -166,11 +132,12 @@ export default {
     that.assessid = this.$route.query.assessid;
     that.classid = this.$route.query.classid;
     that.title = this.$route.query.title;
+    that.coursename = this.$route.query.coursename;
 
     that.TermCourseExamScoreStudentList();
   },
   methods: {
-    //试卷列表
+    //课程考试成绩-学生列表
     TermCourseExamScoreStudentList() {
       const that = this;
       let params = {
@@ -183,10 +150,23 @@ export default {
       this.utils.api.TermCourseExamScoreStudentList(params).then(res => {
         if (res.code == 20200) {
           that.stutestList = res.data.list;
-        } else {
+        }
+        if (res.code == 20106) {
+          that.$message.error("身份验证信息已过期，请重新登录");
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        }
+        if (res.code == 20201) {
           that.$message.error(res.msg);
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        } else {
+          // that.$message.error(res.msg);
         }
       });
+      //学期课程班级内页-左学生成绩统计
       this.utils.api.TermCourseExamScoreStudentCollect(params).then(res => {
         if (res.code == 20200) {
           that.acsummary = res.data;
@@ -194,6 +174,9 @@ export default {
           that.$message.error(res.msg);
         }
       });
+    },
+    back(){
+      this.$router.go(-1)
     }
   },
   head(){

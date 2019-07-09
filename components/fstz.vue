@@ -36,7 +36,7 @@
                       <div class="top">
                         <div class="search">
                           <input type="text" placeholder="查询班级">
-                          <a href="#"></a>
+                          <a ondragstart="return false" href="javascript:void(0)"></a>
                         </div>
                         <div class="sel_all">
                           <label :class="selAll?'on':''" @click="funselAll">全部班级</label>
@@ -57,8 +57,8 @@
                     <div class="clear"></div>
                   </div>
                   <div class="sel_btn">
-                    <a class="a1" href="javascript:void(0)" @click="funyx">确定</a>
-                    <a href="javascript:void(0)" @click="dropShow=false">取消</a>
+                    <a ondragstart="return false" class="a1" href="javascript:void(0)" @click="funyx">确定</a>
+                    <a ondragstart="return false" href="javascript:void(0)" @click="dropShow=false">取消</a>
                   </div>
                 </div>
               </div>
@@ -87,8 +87,8 @@
                 <textarea v-model="content"></textarea>
               </div>
               <div class="mod_btn">
-                <a class="a1" href="javascript:void(0)" @click="funfstz">发送通知</a>
-                <a href="javascript:void(0)" @click="close">取消</a>
+                <a ondragstart="return false" class="a1" href="javascript:void(0)" @click="funfstz">发送通知</a>
+                <a ondragstart="return false" href="javascript:void(0)" @click="close">取消</a>
               </div>
             </div>
           </div>
@@ -157,6 +157,10 @@ export default {
         selList.push(that.classList[i].id);
       }
       if (!that.curserid && !that.termid && selList.length < 1) {
+        that.$message.error("请选择班级");
+        return false;
+      }
+      if(selList.length < 1){
         that.$message.error("请选择班级");
         return false;
       }

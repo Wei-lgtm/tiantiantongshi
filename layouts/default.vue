@@ -3,6 +3,19 @@
     <nuxt />
   </div>
 </template>
+<script>
+import { aesDecrypt } from "@/utils/crypto";
+export default {
+  mounted(){
+		if(!sessionStorage.getItem('SUCCESS')){
+			this.$router.push("/")
+		}else{
+			let userInfo = JSON.parse(aesDecrypt(sessionStorage.getItem('SUCCESS'),'abc'))
+			this.$store.commit("setUserInfo",userInfo)
+		}
+	}
+}
+</script>
 
 <style>
 html {

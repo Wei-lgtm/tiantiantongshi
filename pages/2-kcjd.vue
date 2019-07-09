@@ -1,76 +1,40 @@
 <template>
-  <div class="mainer">
-    <div class="wrap">
-      <div class="page_left">
-        <ul>
-          <li>
-            <nuxt-link to="/">
-              <span>我的课程</span>
-            </nuxt-link>
-          </li>
-          <li class="on">
-            <nuxt-link to="/2-kcjd">
-              <span>课程进度</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/3-zyks">
-              <span>作业考试</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/4-cjgl">
-              <span>成绩管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/5-xjgl">
-              <span>学籍管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/6-kcgl">
-              <span>课程管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/7-jsgl">
-              <span>教师管理</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/8-jgsz">
-              <span>学校设置</span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
-      <div class="page_right">
-        <div class="course_sel">
-          <span @click="showToggle()">{{cname.courseName}}</span>
-          <div class="drop" v-show="dropshow">
-            <ul>
-              <li
-                v-for="(item,index) in courseList"
-                :key="index"
-                @click="fungetRate(item)"
-              >{{item.courseName}}</li>
-              <!--item.courseId,item.termId,item.courseName-->
-            </ul>
-          </div>
-        </div>
-        <div class="chart">
-          <div class="left">
-            <div class="tit">
-              <h3>学习总进度</h3>
-              <span>当前计划进度：{{courseList.planProgress?courseList.planProgress:'0'}}%</span>
-              <div class="clear"></div>
-            </div>
-            <div class="chart_pie">
-              <v-chart :options="pie"/>
+  <div>
+    <Header />
+    <div class="mainer">
+      <div class="wrap">
+        <LeftNav />
+        <div class="page_right">
+          <div class="course_sel">
+            <span @click="showToggle()">{{coursename}}</span>
+            <div class="drop" v-show="dropshow">
+              <ul>
+                <li
+                  v-for="(item,index) in courseList"
+                  :key="index"
+                  @click="fungetRate(item)"
+                >{{item.courseName ? item.courseName :''}}</li>
+                <!--item.courseId,item.termId,item.courseName-->
+              </ul>
             </div>
           </div>
-          <div class="right">
+          <div class="chart">
+            <div class="left">
+              <div class="tit">
+                <h3>学习总进度</h3>
+                <span>当前计划进度：{{progresslsit.planProgress?progresslsit.planProgress:'0'}}%</span>
+                <div class="clear"></div>
+              </div>
+              <div class="chart_pie" v-if="courseList.length > 0">
+                <v-chart :options="pie" />
+              </div>
+              <div class="chart_pie" v-else>
+                <div class="data_default data_default1">
+                  <img src="@/assets/img/curriculum_default.png" />
+                </div>
+              </div>
+            </div>
+            <!-- <div class="right">
             <div class="tit">
               <h3>学习趋势</h3>
               <span>
@@ -87,76 +51,99 @@
               <div class="clear"></div>
             </div>
             <div class="chart_line">
-              <!-- <v-chart :options="line"/> -->
-              <!-- <div id="linechar" :style="{width:'100%',height:'100%'}"></div> -->
+              <v-chart :options="line"/>
+              <div id="linechar" :style="{width:'100%',height:'100%'}"></div>
               <img src="@/assets/img/tb2.jpg">
             </div>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="page_tab">
-          <div class="title">
-            <h3>详情</h3>
-            <div class="title_search">
-              <input type="text" v-model="classname" placeholder="请输入班级">
-              <a href="javascript:void(0)" @click="search"></a>
-            </div>
-            <div class="title_btn">
-              <span>
-                <a class="a1" href="#" @click="showDcxx=true">督促学习</a>
-              </span>
-              <span>
-                <a class="a2" href="#">导出名单</a>
-              </span>
-            </div>
+            </div>-->
             <div class="clear"></div>
           </div>
-          <div class="tab_box">
-            <table cellpadding="0" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>班级名称</th>
-                  <th>辅导老师</th>
-                  <th>选修人数</th>
-                  <th>
-                    班级平均
-                    <br>进度(%）
-                  </th>
-                  <th>快于计划</th>
-                  <th>慢于计划</th>
-                  <th>没有学习</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item,index) in classProgress" :key="index">
-                  <td>
-                    <nuxt-link
-                      :to="{path:'2-kcjd-bjxq',query:{courseid:item.courseId,termid:item.termId,classid:item.classId}}"
-                    >{{item.className}}</nuxt-link>
-                  </td>
-                  <td>{{item.teacherName}}</td>
-                  <td>{{item.studentTotal}}</td>
-                  <td>{{item.learningRate}}</td>
-                  <td>{{item.faster}}</td>
-                  <td>{{item.slower}}</td>
-                  <td>{{item.noLearn}}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="page_tab">
+            <div class="title">
+              <h3>详情</h3>
+              <div class="title_search">
+                <input type="text" v-model="classname" placeholder="请输入班级" />
+                <a href="javascript:void(0)" @click="search" ondragstart="return false"></a>
+              </div>
+              <div class="title_btn" v-if="classProgress.length > 0">
+                <span>
+                  <a
+                    class="a1"
+                    href="javascript:void(0)"
+                    @click="showDcxx=true"
+                    ondragstart="return false"
+                  >督促学习</a>
+                </span>
+                <span>
+                  <a class="a2" @click="winhref" ondragstart="return false">导出名单</a>
+                </span>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="tab_box">
+              <table cellpadding="0" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>班级名称</th>
+                    <th>辅导老师</th>
+                    <th>选修人数</th>
+                    <th>
+                      班级平均
+                      <br />进度(%）
+                    </th>
+                    <th>快于计划</th>
+                    <th>慢于计划</th>
+                    <th>没有学习</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template v-if="classProgress.length > 0">
+                    <tr v-for="(item,index) in classProgress" :key="index">
+                      <td>
+                        <nuxt-link
+                          ondragstart="return false"
+                          :to="{path:'/2-kcjd-bjxq',query:{courseid:item.courseId,termid:item.termId,classid:item.classId,classname:item.className,cname:cname.courseName,}}"
+                        >{{item.className}}</nuxt-link>
+                      </td>
+                      <td>{{item.teacherName}}</td>
+                      <td>{{item.studentTotal}}</td>
+                      <td>{{item.learningRate}}</td>
+                      <td>{{item.faster}}</td>
+                      <td>{{item.slower}}</td>
+                      <td>{{item.noLearn}}</td>
+                    </tr>
+                  </template>
+                  <template v-else>
+                    <tr>
+                      <td colspan="7">
+                        <div class="data_default">
+                          <img src="@/assets/img/curriculum_default.png" />
+                        </div>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <div class="clear"></div>
+        <dcxx :showDcxx.sync="showDcxx" :dcxxtype="1" />
       </div>
-      <div class="clear"></div>
-      <dcxx :showDcxx.sync="showDcxx"/>
     </div>
   </div>
 </template>
 <script>
 import Dcxx from "@/components/dcxx";
 import echarts from "echarts";
+import Header from "@/components/Header";
+import LeftNav from "@/components/left_nav";
+import domainName from "@/config/main";
 export default {
   components: {
-    Dcxx
+    Dcxx,
+    Header,
+    LeftNav
   },
   data() {
     return {
@@ -169,8 +156,11 @@ export default {
       progresslsit: [],
       pie: {},
       LearnTrendslist: [],
-      datatime: "",
-      classname: ""
+      classname: "",
+      nodata: false,
+      termid: 0,
+      courseid: 0,
+      coursename: ""
     };
   },
   mounted() {
@@ -178,9 +168,17 @@ export default {
     that.getRecommendIndex();
   },
   methods: {
-    getTime() {
+    winhref() {
       const that = this;
-      that.datatime = JSON.parse(new Date().getDate()) + 1;
+      window.location.href =
+        domainName + "/course/classCourseReportExport?termId=" +
+        that.termid +
+        "&courseId=" +
+        that.courseid +
+        "&className=" +
+        that.classname +
+        "&schoolId=" +
+        this.$store.getters.user.schoolId;
     },
     search() {
       const that = this;
@@ -224,10 +222,27 @@ export default {
         if (res.code == 20200) {
           that.courseList = JSON.parse(JSON.stringify(res.data)); //课程
           that.cname = res.data[0];
+          that.termid = res.data[0].termId;
+          that.courseid = res.data[0].courseId;
+          that.coursename = res.data[0].courseName;
           that.getRatelearning();
           that.getcourseSchedule();
           that.LearnProgress();
           that.LearnTrends();
+          that.$store.commit("setCourseId", that.cname.courseId);
+          that.$store.commit("setTermId", that.cname.termId);
+        }
+        if (res.code == 20106) {
+          that.$message.error("身份验证信息已过期，请重新登录");
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
+        }
+        if (res.code == 20201) {
+          that.$message.error(res.msg);
+          setTimeout(function() {
+            that.$router.push("/");
+          }, 1000);
         }
       });
     },
@@ -238,6 +253,11 @@ export default {
     fungetRate(item) {
       //cid, tid, cname
       const that = this;
+      that.termid = item.termId;
+      that.courseid = item.courseId;
+      that.coursename = item.courseName;
+      that.$store.commit("setCourseId", item.courseId);
+      that.$store.commit("setTermId", item.termId);
       let params = {
         courseId: item.courseId,
         termId: item.termId
@@ -251,7 +271,7 @@ export default {
           that.LearnProgress();
           that.LearnTrends();
         } else {
-          that.$message.error(res.msg);
+          // that.$message.error(res.msg);
         }
       });
     },
@@ -377,7 +397,7 @@ export default {
     }
   },
   created() {
-    this.getTime();
+    
   },
   head() {
     return {

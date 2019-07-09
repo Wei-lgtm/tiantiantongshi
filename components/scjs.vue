@@ -12,7 +12,7 @@
                             <p>确定删除所选老师？</p>
                         </div>
                         <div class="mod_btn">
-                            <a class="a1" href="javascript:void(0)" @click="funDelTeacher">确定</a><a href="javascript:void(0)" @click="close()">取消</a>
+                            <a ondragstart="return false" class="a1" href="javascript:void(0)" @click="funDelTeacher">确定</a><a ondragstart="return false" href="javascript:void(0)" @click="close()">取消</a>
                         </div>
                     </div>
                 </div>

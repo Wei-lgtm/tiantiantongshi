@@ -26,11 +26,11 @@ const api = {
    LoginOut() {
     return request.post('/user/loginOut')
   },
-  //系统消息
+  //学校通知列表
   systemMessage(params) {
     return request2.post('/message/messageList', params)
   },
-  //考核标准
+  //获取指定学期课程教学计划
   assessmentCriteria(assessmentparams) {
     return request2.post('/course/getTermCoursePlan', assessmentparams)
   },
@@ -58,6 +58,10 @@ const api = {
   ListofAchievements(params) {
     return request2.post('/transcript/termCourseStudentScoreList', params)
   },
+  //学期课程学生成绩编辑
+  TermCourseScoreEdit(params) {
+    return request2.post('/transcript/termCourseScoreEdit', params)
+  },
   //学期课程综合成绩汇总
   AchievementSummary(params) {
     return request2.post('/transcript/termCourseCollect', params)
@@ -71,8 +75,8 @@ const api = {
     return request2.post('/course/termCourseList', params)
   },
   //教师列表
-  ListofTeachers() {
-    return request2.post('/teacher/teacherList')
+  ListofTeachers(params) {
+    return request2.post('/teacher/teacherList',params)
   },
   //发送通知
   AddTermCourseClassMessage(params) {
@@ -85,6 +89,14 @@ const api = {
   //班级学习进度报表
   ClassCourseReportDetail(params) {
     return request2.post('/course/classCourseReportDetail', params)
+  },
+   //督促学习进度列表
+   CourseProgressList(params) {
+    return request2.post('/course/courseProgressList', params)
+  },
+  //督促学习通知接口
+  AddMessage(params) {
+    return request2.post('/message/addMessage', params)
   },
    //课程考试成绩按班级列表
    TermCourseExamScoreClassCollect(params) {
@@ -185,6 +197,50 @@ Upimages(params) {
 //学校名与logo信息编辑
 SchoolEdit(params) {
   return request2.post('/school/edit', params)
+},
+//学期课程学生成绩导出
+TermCourseStudentScoreExport(params) {
+  return request2.post('/transcript/termCourseStudentScoreExport', params,{responseType: 'arraybuffer'})
+},
+//学期课程选课学生批量导出（可以指定班级）
+TermCourseStudentExport(params) {
+  return request2.post('/student/termCourseStudentExport', params,{responseType: 'arraybuffer'})
+},
+//学期课程班级学生信息下载
+TermCourseClassStudentExport(params) {
+  return request2.post('/student/termCourseClassStudentExport', params,{responseType: 'arraybuffer'})
+},
+//指定学期课程试卷导出学生成绩
+TermCourseExamPaperScoreExport(params) {
+  return request2.post('/exam/termCourseExamPaperScoreExport', params,{responseType: 'arraybuffer'})
+},
+//教师信息导出
+ExportTeacher(params) {
+  return request2.post('/teacher/exportTeacher',params,{responseType: 'arraybuffer'})
+},
+//导出学生信息excel
+ExportStudent(params) {
+  return request2.post('/student/exportStudent',params,{responseType: 'arraybuffer'})
+},
+//学生信息导入
+StudentImport(params) {
+  return request2.post('/student/studentImport', params)
+},
+//学期课程学生选课导入
+TermCourseExportStudent(params) {
+  return request2.post('/student/termCourseExportStudent', params)
+},
+//查看指定批号导入学期课程学生选课记录列表
+TermCourseExportStudentList(params) {
+  return request2.post('/student/termCourseExportStudentList', params)
+},
+//学期课程学生选课保存
+SaveTermCourseExportStudent(params) {
+  return request2.post('/student/saveTermCourseExportStudent', params)
+},
+//下载学期课程学生选课错误列表（EXCEL）
+DownTermCourseExportFailStudentList(params) {
+  return request2.post('/student/downTermCourseExportFailStudentList', params,{responseType: 'arraybuffer'})
 },
 }
 

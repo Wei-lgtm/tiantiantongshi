@@ -44,12 +44,12 @@ module.exports = {
 
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    proxy:true
+    proxy:true,
   },
   proxy:{
     "/api": {
-      target: "http://qasapi.lumibayedu.com/",
-      // target: "https://api.lumibayedu.com/",
+      // target: "http://qasapi.lumibayedu.com/",
+      target: "https://api.lumibayedu.com/",
       secure: true,
       changeOrigin: true,
       pathRewrite: {
@@ -57,8 +57,8 @@ module.exports = {
       }
     },
     "/qasschool": {
-      target: "http://qasschoolapi.lumibayedu.com/",
-      // target: "https://schoolapi.lumibayedu.com/",
+      // target: "http://qasschoolapi.lumibayedu.com/",
+      target: "https://schoolapi.lumibayedu.com/",
       secure: true,
       changeOrigin: true,
       pathRewrite: {

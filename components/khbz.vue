@@ -63,7 +63,7 @@ export default {
     return {};
   },
   mounted() {
-    console.log(this.assessmentlist);
+    
   },
   methods: {
     close() {
